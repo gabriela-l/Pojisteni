@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Seznam pojištění</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/users}">Evidence</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/users}">Pojištěnci</a>
+            </li>
+            <li class="nav-item">
+                <div sec:authorize="hasAuthority('Admin')">
+                <a class="nav-link" th:href="@{/users/new}">Přidat pojištěnce</a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/insurances}">Seznam pojištění <span class="sr-only">(aktuální)</span></a>
+            </li>
+            <li class="nav-item">
+                <div sec:authorize="hasAuthority('Admin')">
+                <a class="nav-link" th:href="@{/insurance/new}">Vytvořit pojištění</a>
+                </div>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/logout}">Odhlásit se</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="mt-2 mx-2 text-right">
+    <!-- principal je právě přihlášený uživatel-->
+    <p>Jsi přihlášen/a jako <b>[[${#request.userPrincipal.principal.fullName}]]</b></p>
+</div>
+<div class="container text-center">
+    <!-- po přidání nového záznamu dojde k přesměrování a zobrazí se zpráva o uložení -->
+    <div th:if="${message}" class="alert alert-success">
+        [[${message}]]
+    </div>
+    <div class="my-4">
+        <h2>Seznam pojištění:</h2>
+    </div>
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="text-center">
+                <tr>
+                    <th>ID</th>
+                    <th>Název</th>
+                    <th>Detail</th>
+                    <th>Začátek platnosti</th>
+                    <th>Konec platnosti</th>
+                    <th>Číslo smlouvy</th>
+                    <th>Pojištěnec</th>
+                    <th sec:authorize="hasAnyAuthority('Admin', 'Editor')"> </th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr th:each="insurance: ${listInsurance}">
+                    <td th:text="${insurance.insurance_id}"></td>
+                    <td th:text="${insurance.title}"></td>
+                    <td th:text="${insurance.detail}"></td>
+                    <td th:text="${insurance.start}"></td>
+                    <td th:text="${insurance.end}"></td>
+                    <td th:text="${insurance.contract}"></td>
+                    <td th:text="${insurance.user?.email}"></td>
+                    <td sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                            <a class="mr-3" th:href="@{/insurance/edit/{insurance_id}(insurance_id=${insurance.insurance_id})}">Upravit</a>
+                            <a sec:authorize="hasAuthority('Admin')" th:href="@{/insurance/delete/{insurance_id}(insurance_id=${insurance.insurance_id})}">Odstranit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

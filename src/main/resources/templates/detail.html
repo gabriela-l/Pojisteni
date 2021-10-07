@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Detail pojištěnce</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/users}">Evidence</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/users}">Pojištěnci</a>
+            </li>
+            <li class="nav-item">
+                <div sec:authorize="hasAuthority('Admin')">
+                <a class="nav-link" th:href="@{/users/new}">Přidat pojištěnce</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/insurances}">Seznam pojištění</a>
+            </li>
+            <li class="nav-item">
+                <div sec:authorize="hasAuthority('Admin')">
+                <a class="nav-link" th:href="@{/insurance/new}">Vytvořit pojištění</a>
+                </div>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/logout}">Odhlásit se</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="mt-2 mx-2 text-right">
+    <!-- principal je právě přihlášený uživatel-->
+    <p>Jsi přihlášen/a jako <b>[[${#request.userPrincipal.principal.fullName}]]</b></p>
+</div>
+
+<div class="container-fluid" style="max-width: 500px;">
+    <div class="border border-secondary rounded p-3">
+        <div class="row pb-2  pl-3">
+            <h5 class="font-weight-bold" th:text="${user.name} + ' ' + ${user.surname}"></h5>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 font-weight-bold">Id:</div>
+            <div class="col-sm-8" th:text="${user.id}"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 font-weight-bold">E-mail:</div>
+            <div class="col-sm-8" th:text="${user.email}"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 font-weight-bold">Role:</div>
+            <div class="col-sm-8" th:text="${user.role}" id="uzivatelskaRole"></div>
+        </div>
+    </div>
+    <div class="border border-secondary rounded p-3 mt-4">
+        <div class="row pb-2  pl-3">
+            <h6 class="font-weight-bold">Pojištění</h6>
+        </div>
+        <div class="font-weight-light font-italic">
+            [[${noInsurance}]]
+        </div>
+        <div th:each="insurance: ${insuranceList}">
+            <div class="row">
+                <div class="col-sm-4 font-weight-bold">Název:</div>
+                <div class="col-sm-8 font-weight-bold" th:text="${insurance.title}"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 font-weight-bold">Id pojištění:</div>
+                <div class="col-sm-8" th:text="${insurance.insurance_id}"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 font-weight-bold">Detail:</div>
+                <div class="col-sm-8" th:text="${insurance.detail}"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 font-weight-bold">Platnost od:</div>
+                <div class="col-sm-8" th:text="${insurance.start}"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 font-weight-bold">Platnost do:</div>
+                <div class="col-sm-8" th:text="${insurance.end}"></div>
+            </div>
+            <div class="row pb-3">
+                <div class="col-sm-4 font-weight-bold">Číslo smlouvy:</div>
+                <div class="col-sm-8" th:text="${insurance.contract}"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+        let role = document.getElementById("uzivatelskaRole");
+        if (role.innerHTML == "User") {
+            role.innerHTML = "Pojištěnec";
+        }
+    </script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
