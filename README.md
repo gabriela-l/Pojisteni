@@ -11,10 +11,11 @@ který může navíc záznamy odstranit a vytvářet nové pojištěnce a pojiš
 Záznamy jsou uloženy v MySQL databázi (správa v MySQL Workbench). Při smazání pojištěnce jsou smazána všechna jeho pojištění.
 
 ### Spuštění aplikace
-V MySQL prosím vytvořte novou databázi s názvem **Pojisteni** a v souboru application.yml zadejte svoje přihlašovací údaje.
-Spusťte PojisteniApplication, v databázi se vytvoří tabulky users, roles, insurance.
+V MySQL vytvořte novou databázi s názvem **Pojisteni**. Otevřete složku Pojisteni v IDE (IntelliJ) a v application.yml zadejte svoje přihlašovací údaje k databázi.
+Spusťte PojisteniApplication (v databázi se vytvoří tabulky users, roles, insurance).
 Nyní je potřeba **změnit nastavení** práce s databází z create na update:
 *hibernate.ddl-auto: update*
+
 Aplikace běží na adrese http://localhost:8080
 
 ### Připravené SQL příkazy pro vyzkoušení funkcionality:
