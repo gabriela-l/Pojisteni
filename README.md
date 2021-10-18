@@ -15,6 +15,7 @@ V MySQL prosím vytvořte novou databázi s názvem **Pojisteni** a v souboru ap
 Spusťte PojisteniApplication, v databázi se vytvoří tabulky users, roles, insurance.
 Nyní je potřeba **změnit nastavení** práce s databází z create na update:
 *hibernate.ddl-auto: update*
+Aplikace běží na adrese http://localhost:8080
 
 ### Připravené SQL příkazy pro vyzkoušení funkcionality:
 
@@ -66,5 +67,3 @@ INSERT INTO Pojisteni.insurance VALUES (4, '300781228', 'extra', 'Úrazové poji
 
 *Pojištěnec tedy může mít více pojištění, např. pojištěnec s ID 1 (jsou vypsány v detailu pojištěnce).*
 
-
-(V případě, že dojde k “Data truncation error - data too long for column…” může pomoci SQL příkaz SET @@global.sql_mode= '';)
