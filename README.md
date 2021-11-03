@@ -1,7 +1,7 @@
 # CRUD aplikace Pojištění
 
 Aplikace Pojištění obsahuje kompletní správu pojištěných a jejich pojištění.
-Využívá **Spring Boot framework, Maven, Thymeleaf, Hibernate, Bootstrap** a **MySQL**. Aplikace byla vytvořena v prostředí IntelliJ.
+Využívá **Spring Boot a Hibernate framework, Maven, Thymeleaf, Bootstrap** a **MySQL**. Aplikace byla vytvořena v prostředí IntelliJ.
 
 ## O aplikaci
 Pro přístup do databáze se uživatel zaregistruje a přihlásí, čímž se zároveň vytvoří jeho záznam v databázi.
